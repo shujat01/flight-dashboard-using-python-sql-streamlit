@@ -8,28 +8,16 @@ class DB:
     def __init__(self):
         try:
             self.conn = mysql.connector.connect(
-                host=os.getenv('DB_HOST', '127.0.0.1'),
-                user=os.getenv('DB_USER', 'root'),
-                password=os.getenv('DB_PASSWORD', ''),
-                database=os.getenv('DB_NAME', 'flights')
+            host='127.0.0.1',   # Replace with your host
+            user='root',        # Replace with your username
+            password='',        # Replace with your password
+            database='flights'   #replace with you database
             )
             self.mycursor = self.conn.cursor(dictionary=True)
             print('Connection established')
         except Error as e:
             print(f'Connection error: {e}')
             raise
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-
-    def close(self):
-        if hasattr(self, 'mycursor') and self.mycursor:
-            self.mycursor.close()
-        if hasattr(self, 'conn') and self.conn:
-            self.conn.close()
 
     def fetch_city_names(self):
         try:
